@@ -4,6 +4,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -22,7 +23,7 @@ public class ConvexGUI {
     private List<Point> points;
     private List<Point> hull;
 
-    public  ConvexGUI(List<Point> points, List<Point> hull) {
+    public ConvexGUI(List<Point> points, List<Point> hull) {
         if (points == null){
             throw new NullPointerException("Points are null");
         }
@@ -35,6 +36,7 @@ public class ConvexGUI {
     }
 
     private XYSeries[] getXySeries(){
+
         final XYSeries [] xySeries = new XYSeries[hull.size()];
 
         for (int i = 0; i < xySeries.length-1 ; i++) {
@@ -84,25 +86,30 @@ public class ConvexGUI {
     private JFreeChart getChart(){
 
         JFreeChart jFreeChart = ChartFactory.createXYLineChart("ОБОЛОЧКА", "X", "Y", collection,
-                PlotOrientation.VERTICAL, true, true, false);
+                PlotOrientation.VERTICAL, false, false, false);
 
-        XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) jFreeChart.getXYPlot().getRenderer();
+        XYPlot plot = jFreeChart.getXYPlot();
+
+        plot.setBackgroundPaint(Color.BLACK);
+
+        XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
 
         for (int i = 0; i < xySeries.length; i++) {
-            renderer.setSeriesPaint(i,Color.BLACK);
+            renderer.setSeriesPaint(i,Color.red);
             renderer.setSeriesShape(i,new Ellipse2D.Double(0,0,3,3));
             renderer.setSeriesShapesVisible(i,true);
         }
 
         renderer.setSeriesShape(xySeries.length,new Ellipse2D.Double(0,0,3,3));
-        renderer.setSeriesShapesVisible(xySeries.length,true);
+        renderer.setSeriesShapesVisible(xySeries.length, true);
+        renderer.setSeriesPaint(xySeries.length,Color.green);
         renderer.setSeriesLinesVisible(xySeries.length,false);
-
 
         return jFreeChart;
     }
 
     public void paint(){
+
         if (hull.size() == 0){
             return;
         }
@@ -115,7 +122,7 @@ public class ConvexGUI {
 
         frame.setBackground(Color.WHITE);
 
-        frame.setSize(500, 500);
+        frame.setSize(700, 500);
 
         frame.setVisible(true);
     }

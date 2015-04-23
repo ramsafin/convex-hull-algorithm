@@ -77,7 +77,7 @@ public class Main {
         }
 
         if (args.length < 2){
-            System.err.println("Argument must be strictly two");
+            System.err.println("Arguments must be strictly two");
             return;
         }
 
@@ -85,7 +85,7 @@ public class Main {
 
         ConvexHull convexHull = new ConvexHull(points);
 
-        List<Point> hull = convexHull.findConvexHull();
+        List<Point> hull = convexHull.findConvexHull(); // Convex hull
 
         writeToFile(args[1], hull);
 

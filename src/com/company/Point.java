@@ -59,8 +59,7 @@ public class Point {
 
         Point point = (Point) o;
 
-        if (Double.compare(point.x, x) != 0) return false;
-        return Double.compare(point.y, y) == 0;
+        return Double.compare(point.x, x) == 0 && Double.compare(point.y, y) == 0;
 
     }
 
