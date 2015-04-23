@@ -16,26 +16,30 @@ import java.util.List;
 public class ConvexGUI {
 
     private XYSeries [] xySeries;
+    private XYSeries xySeriesOther;
     private XYSeriesCollection collection;
     private JFreeChart chart;
     private List<Point> points;
+    private List<Point> hull;
 
-    public  ConvexGUI(List<Point> points) {
+    public  ConvexGUI(List<Point> points, List<Point> hull) {
         if (points == null){
             throw new NullPointerException("Points are null");
         }
         this.points = points;
+        this.hull = hull;
         xySeries = getXySeries();
+        xySeriesOther = getXYSeries();
         collection = getXYSeriesCollection();
         chart = getChart();
     }
 
     private XYSeries[] getXySeries(){
-        final XYSeries [] xySeries = new XYSeries[points.size()];
+        final XYSeries [] xySeries = new XYSeries[hull.size()];
 
         for (int i = 0; i < xySeries.length-1 ; i++) {
-            Point p1 = points.get(i);
-            Point p2 = points.get(i+1);
+            Point p1 = hull.get(i);
+            Point p2 = hull.get(i+1);
 
             xySeries[i] = new XYSeries(i+1);
 
@@ -43,14 +47,24 @@ public class ConvexGUI {
             xySeries[i].add(p2.getX(),p2.getY());
 
         }
-        xySeries[points.size()-1] = new XYSeries(xySeries.length);
+        xySeries[hull.size()-1] = new XYSeries(xySeries.length);
 
-        xySeries[points.size()-1].add(points.get(0).getX(), points.get(0).getY());
+        xySeries[hull.size()-1].add(hull.get(0).getX(), hull.get(0).getY());
 
-        xySeries[points.size()-1].add(points.get(points.size()-1).getX()
-                ,points.get(points.size()-1).getY());
+        xySeries[hull.size()-1].add(hull.get(hull.size()-1).getX()
+                ,hull.get(hull.size()-1).getY());
 
         return xySeries;
+    }
+
+    private XYSeries getXYSeries(){
+
+        XYSeries series = new XYSeries("");
+
+        for (Point val : points){
+            series.add(val.getX(),val.getY());
+        }
+        return series;
     }
 
     private XYSeriesCollection getXYSeriesCollection(){
@@ -60,6 +74,8 @@ public class ConvexGUI {
         for(XYSeries xySer : xySeries){
             col.addSeries(xySer);
         }
+
+        col.addSeries(xySeriesOther);
 
         return col;
     }
@@ -76,14 +92,18 @@ public class ConvexGUI {
             renderer.setSeriesPaint(i,Color.BLACK);
             renderer.setSeriesShape(i,new Ellipse2D.Double(0,0,3,3));
             renderer.setSeriesShapesVisible(i,true);
-
         }
+
+        renderer.setSeriesShape(xySeries.length,new Ellipse2D.Double(0,0,3,3));
+        renderer.setSeriesShapesVisible(xySeries.length,true);
+        renderer.setSeriesLinesVisible(xySeries.length,false);
+
 
         return jFreeChart;
     }
 
     public void paint(){
-        if (points.size() == 0){
+        if (hull.size() == 0){
             return;
         }
 

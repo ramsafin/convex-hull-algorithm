@@ -71,6 +71,7 @@ public class Main {
 
 
     public static void main(String[] args) {
+
         if (args == null){
             throw new NullPointerException("args cant be null. Enter path to input and output");
         }
@@ -84,11 +85,11 @@ public class Main {
 
         ConvexHull convexHull = new ConvexHull(points);
 
-        points = convexHull.findConvexHull();
+        List<Point> hull = convexHull.findConvexHull();
 
-        writeToFile(args[1], points);
+        writeToFile(args[1], hull);
 
-        ConvexGUI gui = new ConvexGUI(points);
+        ConvexGUI gui = new ConvexGUI(points,hull);
 
         gui.paint();
 
