@@ -3,6 +3,7 @@ package com.company;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
@@ -33,6 +34,7 @@ public class ConvexGUI {
         xySeriesOther = getXYSeries();
         collection = getXYSeriesCollection();
         chart = getChart();
+        setUp();
     }
 
     private XYSeries[] getXySeries(){
@@ -85,27 +87,34 @@ public class ConvexGUI {
 
     private JFreeChart getChart(){
 
-        JFreeChart jFreeChart = ChartFactory.createXYLineChart("ОБОЛОЧКА", "X", "Y", collection,
+        return ChartFactory.createXYLineChart("ОБОЛОЧКА", "X", "Y", collection,
                 PlotOrientation.VERTICAL, false, false, false);
+    }
 
-        XYPlot plot = jFreeChart.getXYPlot();
+    private void setUp(){
 
-        plot.setBackgroundPaint(Color.BLACK);
+        XYPlot plot = chart.getXYPlot();
+
+        plot.setBackgroundPaint(Color.WHITE);
 
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
 
         for (int i = 0; i < xySeries.length; i++) {
             renderer.setSeriesPaint(i,Color.red);
-            renderer.setSeriesShape(i,new Ellipse2D.Double(0,0,3,3));
-            renderer.setSeriesShapesVisible(i,true);
         }
-
-        renderer.setSeriesShape(xySeries.length,new Ellipse2D.Double(0,0,3,3));
+        renderer.setSeriesShape(xySeries.length, new Ellipse2D.Double(0, 0, 3, 3));
         renderer.setSeriesShapesVisible(xySeries.length, true);
-        renderer.setSeriesPaint(xySeries.length,Color.green);
-        renderer.setSeriesLinesVisible(xySeries.length,false);
+        renderer.setSeriesPaint(xySeries.length, Color.BLUE);
+        renderer.setSeriesLinesVisible(xySeries.length, false);
+        renderer.setDrawOutlines(true);
 
-        return jFreeChart;
+        final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+        rangeAxis.setAutoRange(true);
+        rangeAxis.setAutoRangeIncludesZero(false);
+
+        plot.setRangeGridlinePaint(Color.black);
+        plot.setDomainGridlinePaint(Color.black);
+
     }
 
     public void paint(){
