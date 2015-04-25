@@ -104,7 +104,7 @@ public class ConvexGUI {
         for (int i = 0; i < xySeries.length; i++) {
             renderer.setSeriesPaint(i,Color.red);
         }
-        renderer.setSeriesShape(xySeries.length, new Ellipse2D.Double(0, 0, 3, 3));
+        renderer.setSeriesShape(xySeries.length, new Ellipse2D.Double(0, -2, 3, 3));
         renderer.setSeriesShapesVisible(xySeries.length, true);
         renderer.setSeriesPaint(xySeries.length, Color.BLUE);
         renderer.setSeriesLinesVisible(xySeries.length, false);
