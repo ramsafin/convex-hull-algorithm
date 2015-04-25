@@ -7,8 +7,7 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.data.xy.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,6 +29,9 @@ public class ConvexGUI {
         }
         this.points = points;
         this.hull = hull;
+        if (hull.size() == 0){
+            return;
+        }
         xySeries = getXySeries();
         xySeriesOther = getXYSeries();
         collection = getXYSeriesCollection();
@@ -109,11 +111,18 @@ public class ConvexGUI {
         renderer.setDrawOutlines(true);
 
         final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         rangeAxis.setAutoRange(true);
         rangeAxis.setAutoRangeIncludesZero(false);
 
         plot.setRangeGridlinePaint(Color.black);
         plot.setDomainGridlinePaint(Color.black);
+
+
+        final NumberAxis xAxis = (NumberAxis)plot.getDomainAxis();
+        xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        xAxis.setAutoRange(true);
+        xAxis.setAutoRangeIncludesZero(false);
 
     }
 

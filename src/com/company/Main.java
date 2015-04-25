@@ -46,6 +46,11 @@ public class Main {
         return points;
     }
 
+//    private List<Point> getRandList(int size){
+//        Random r = new Random();
+//
+//    }
+
 
     /**
      * Метод для записи в файл списка точек

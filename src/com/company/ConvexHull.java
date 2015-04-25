@@ -93,16 +93,14 @@ public class ConvexHull {
         //находим минимальную точку
         Point min = getMinimumPoint();
 
-        Point minClone = new Point(min.getX(),min.getY());
-
         //переносим начало координат в точку минимума
-        points.stream().forEach(e -> e.minus(minClone));
+        points.forEach(e -> e.minus(min));
 
         //сортируем точки по полярному углу относительно точки min
         Collections.sort(points, PointHelper.polarOrder());
 
         //возвращаем координаты точек
-        points.stream().forEach(e -> e.plus(minClone));
+        points.forEach(e -> e.plus(min));
     }
 
     /**
@@ -128,6 +126,6 @@ public class ConvexHull {
                 }
             }
         }
-        return min;
+        return new Point(min.getX(),min.getY());
     }
 }
