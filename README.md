@@ -12,7 +12,7 @@ For example this file can looks like this</br>
 341.2 12.56
 </pre>
 
-and  <code>second_arg</code> - is a file where minimal convex hull points are stored.
+and  <code>second_arg</code> - is a file where minimal convex hull points are stored.</br>
 
 For the example above this file looks like this</br>
 <pre>
