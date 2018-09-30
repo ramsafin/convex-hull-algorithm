@@ -2,7 +2,7 @@
 
 Implementation of the Graham algorithm for finding a convex hull with UI based on jfree-chart.
 
-Given the set of points in the 2D dimension, find convex hull of it:
+Given the set of points in the 2D dimension
 ```
 1.12 3.23
 123.1 23.1
@@ -18,3 +18,6 @@ Given the set of points in the 2D dimension, find convex hull of it:
 330 1
 150 10
 ```
+the resulting convex hull will be the following:
+
+![](convexhull.png)
